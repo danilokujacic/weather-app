@@ -1,7 +1,8 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
 import QueryClient from '../../api/queryClient';
 import useUser from '../../utils/useUser';
-import WeatherWidget from '../Weather/WeatherWidget';
+import LoaderComponent from '../Loader/Loader';
+import WeatherWidget from '../Weather/WeatherWidget/WeatherWidget';
 
 const NearbyCitiesWidget: FC = () => {
     const { user } = useUser();
@@ -35,7 +36,7 @@ const NearbyCitiesWidget: FC = () => {
                     <WeatherWidget key={index} {...item} />
                 ))
             ) : (
-                <>Loading....</>
+                <LoaderComponent />
             )}
         </div>
     );

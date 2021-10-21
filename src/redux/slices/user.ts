@@ -6,15 +6,18 @@ export const userSlice = createSlice({
         locationCity: '',
         locationCountry: '',
         locationState: '',
+        lat: 0,
+        lon: 0,
     },
 
     reducers: {
         setUserCity(state, action) {
-            console.log('SLICE TRIGERS');
             const {
-                payload: { cityName },
+                payload: { cityName, lat, lon },
             } = action;
             state.locationCity = cityName;
+            state.lat = lat;
+            state.lon = lon;
         },
         setUserCountry(state, action) {
             const {

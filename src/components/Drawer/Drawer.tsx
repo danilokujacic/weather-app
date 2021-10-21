@@ -32,12 +32,13 @@ const HamburgerHolder = styled.div`
 
 const Drawer: FC<any> = ({ isOpen, handleClose }) => {
     const DrawerContainer = styled.div`
-        position: absolute;
+        position: fixed;
         width: 100%;
         top: 0;
         left: 0;
+        z-index: 5;
         overflow: hidden;
-        animation: ${isOpen ? rollIn : rollOut} ${isOpen ? '0.5' : '0.3'}s
+        animation: ${isOpen ? rollIn : rollOut} ${isOpen ? '0.3' : '0.3'}s
             ${isOpen ? 'ease-out' : 'ease-in'} forwards;
     `;
 

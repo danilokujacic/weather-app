@@ -1,6 +1,8 @@
 import { FC } from 'react';
+import LoaderComponent from '../components/Loader/Loader';
+
 import NearbyCitiesWidget from '../components/NearbyCities/NearbyCitiesWidget';
-import WeatherWidget from '../components/Weather/WeatherWidget';
+import WeatherWidget from '../components/Weather/WeatherWidget/WeatherWidget';
 import useUser from '../utils/useUser';
 
 const Welcome: FC<any> = () => {
@@ -16,7 +18,7 @@ const Welcome: FC<any> = () => {
                         country={user.locationCountry}
                     />
                 ) : (
-                    <>Loading...</>
+                    <LoaderComponent />
                 )}
             </section>
             <section>

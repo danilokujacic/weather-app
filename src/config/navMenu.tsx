@@ -3,8 +3,11 @@ import {
     faMapMarkedAlt,
     faUserAlt,
 } from '@fortawesome/free-solid-svg-icons';
-import { FC } from 'react';
-import Welcome from '../pages/Welcome';
+import { FC, lazy, Suspense } from 'react';
+import LoaderComponent from '../components/Loader/Loader';
+const Welcome = lazy(() => import('../pages/Welcome'));
+const WeatherMap = lazy(() => import('../pages/WeatherMap'));
+const AboutMe = lazy(() => import('../pages/AboutMe'));
 
 export type INavMenuConfig = {
     name: string;
@@ -20,21 +23,33 @@ const navMenuConfig: INavMenuConfig[] = [
         title: 'Weather app',
         path: '/',
         icon: faHome,
-        component: Welcome,
+        component: () => (
+            <Suspense fallback={<LoaderComponent />}>
+                <Welcome />
+            </Suspense>
+        ),
     },
     {
         name: 'Weather map',
         title: 'Weather map',
         path: '/weather-map',
         icon: faMapMarkedAlt,
-        component: () => <></>,
+        component: () => (
+            <Suspense fallback={<LoaderComponent />}>
+                <WeatherMap />
+            </Suspense>
+        ),
     },
     {
         name: 'About creator',
         title: 'About me',
         path: '/about',
         icon: faUserAlt,
-        component: () => <></>,
+        component: () => (
+            <Suspense fallback={<LoaderComponent />}>
+                <AboutMe />
+            </Suspense>
+        ),
     },
 ];
 export default navMenuConfig;

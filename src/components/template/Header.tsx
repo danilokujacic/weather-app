@@ -23,7 +23,7 @@ const Header: FC<any> = () => {
     };
 
     return (
-        <div className='bg-blue-300 px-2 md:px-6 py-2 flex items-center md:items-start justify-between'>
+        <div className='bg-blue-300 pl-6 pr-2 md:px-6 py-2 flex items-center md:items-start justify-between'>
             <h1 className='uppercase font-semibold text-white'>
                 {computePath()}
             </h1>

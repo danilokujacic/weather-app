@@ -1,4 +1,5 @@
 import 'dotenv';
+import { IWeatherObject } from '../utils/formatWeather';
 
 class QueryClient {
     getUserLocation = async () => {
@@ -32,23 +33,58 @@ class QueryClient {
         );
         return await cities.json();
     };
+    getCityByCoordinates = async (lat: number, lon: number) => {
+        try {
+            const city = await (
+                await fetch(
+                    `https://geodb-cities-graphql.p.rapidapi.com/v1/geo/locations/${lat}${
+                        lon > 0 ? '+' : ''
+                    }${lon}/nearbyCities?radius=5`,
+                    {
+                        headers: {
+                            'x-rapidapi-host': `${process.env.REACT_APP_CITIES_API_HOST}`,
+                            'x-rapidapi-key': `${process.env.REACT_APP_CITIES_API_KEY}`,
+                        },
+                    },
+                )
+            ).json();
+
+            if (!city.data.length) {
+                return 'NO CITY';
+            }
+            return city.data[0];
+        } catch (err) {
+            return 'CALM DOWN';
+        }
+    };
+    getGithub = async () => {
+        const user = await (
+            await fetch(`${process.env.REACT_APP_MY_GITHUB}`)
+        ).json();
+
+        return user;
+    };
     getWeather = async (
         cityName: string,
         countryCode?: string,
         stateCode?: string,
     ) => {
-        const queryData = [cityName, countryCode, stateCode]
-            .filter((entry) => entry)
-            .join(', ');
-        const cityData = await fetch(
-            `${process.env.REACT_APP_API_BASE}?q=${queryData}&units=metric&appid=${process.env.REACT_APP_WEATHER_API_KEY}`,
-        )
-            .then((res) => res.json())
-            .catch((err) => {
-                console.log('trigerrrio');
-            });
-
-        return cityData;
+        try {
+            const queryData = [cityName, countryCode, stateCode]
+                .filter((entry) => entry)
+                .join(', ');
+            const cityData = await (
+                await fetch(
+                    `${process.env.REACT_APP_API_BASE}?q=${queryData}&units=metric&appid=${process.env.REACT_APP_WEATHER_API_KEY}`,
+                )
+            ).json();
+            if (cityData.cod !== 200) {
+                throw Error(cityData.message);
+            }
+            return (await cityData) as IWeatherObject;
+        } catch (err) {
+            return (err as any).message;
+        }
     };
 }
 

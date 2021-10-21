@@ -14,7 +14,7 @@
     }
     h3 {
         @apply text-xl;
-        @apply text-pink-500;
+        @apply text-blue-500;
         @apply font-bold;
         @apply mb-7;
     }
